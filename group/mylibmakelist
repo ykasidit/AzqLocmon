@@ -1,0 +1,77 @@
+#! /bin/bash
+
+################################################
+#   Copyright (C) 2010 Kasidit Yusuf.
+
+#   This file is part of AzqGenUtils.
+
+#   AzqGenUtils is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+
+#   AzqGenUtils is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+
+#   You should have received a copy of the GNU General Public License
+#   along with AzqGenUtils.  If not, see <http://www.gnu.org/licenses/>.
+#
+################################################
+
+############### Build Config
+
+#s60ed="2nd"
+s60ed="3rd"
+
+if [ "$s60ed" = "3rd" ]; then
+    ##### S60 3rd
+    echo "//////S60 3rd Build start"
+	sdk="s60_31"
+	target="gcce urel"
+	###########
+else
+    ##### S60 2nd
+    echo "//////S60 2nd Build start"
+	sdk="s60_26cw"
+	target="armi urel"
+	###########
+fi
+
+
+export PATH=${HOME}/gnupoc:${PATH}
+export EPOCROOT=${HOME}/symbian-sdks/$sdk/
+
+START_TIME=`date +%s`
+
+case $1 in
+all)
+    echo "//BEGIN build////////////////////////////////////////"	
+	bldmake bldfiles
+	abld build $target
+	echo "//END build////////////////////////////////////////"
+
+
+END_TIME=`date +%s`
+ELAPSED=`expr $END_TIME - $START_TIME`
+echo ""
+echo "Build finished - Elapsed time: " `date -d 00:00:$ELAPSED +%H:%M:%S`
+;;
+
+clean)
+echo "//BEGIN clean//////////////////////"
+abld clean $target
+bldmake clean
+echo "//END clean//////////////////////"
+
+END_TIME=`date +%s`
+ELAPSED=`expr $END_TIME - $START_TIME`
+echo ""
+echo "Clean finished - Elapsed time: " `date -d 00:00:$ELAPSED +%H:%M:%S`
+;;
+
+*)
+   echo "invalid command param: just all or clean"
+;;
+esac

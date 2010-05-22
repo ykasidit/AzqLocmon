@@ -1,0 +1,27 @@
+/*
+============================================================================
+ Name		: AzenqosEngineNetmon.mmp
+ Author	  : Kasidit Yusuf
+ Copyright   : FrewillFX Co., Ltd.
+ Description : This is the project specification file for AzenqosEngineNetmon.
+============================================================================
+*/
+
+TARGET		  AzqLocmon.lib
+TARGETTYPE	  lib
+UID			 0
+
+USERINCLUDE	 ..\inc ..\..\AzqGenUtils\inc
+
+#ifdef EKA2
+
+#endif
+
+SYSTEMINCLUDE   \epoc32\include
+
+
+#ifdef ENABLE_ABIV2_MODE
+DEBUGGABLE
+#endif
+SOURCEPATH ..\src
+SOURCE AzqBtGPSReader.cpp AzqInternalGPSReader.cpp AzqLocationReader.cpp
